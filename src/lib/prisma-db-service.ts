@@ -104,12 +104,12 @@ export class SeriesService {
       name: series.name,
       publisherId: series.publisherId,
       totalIssues: series.totalIssues,
-      locgLink: series.locgLink,
-      locgIssueCount: series.locgIssueCount,
+      locgLink: series.locgLink || undefined,
+      locgIssueCount: series.locgIssueCount || undefined,
       lastCrawled: series.lastCrawled?.toISOString(),
-      startDate: series.startDate,
-      endDate: series.endDate,
-      run: series.run,
+      startDate: series.startDate || undefined,
+      endDate: series.endDate || undefined,
+      run: series.run || undefined,
       createdAt: series.createdAt.toISOString(),
       publisherName: series.publisher.name
     } : null
@@ -121,12 +121,12 @@ export class SeriesService {
         name: series.name,
         publisherId: series.publisherId,
         totalIssues: series.totalIssues,
-        locgLink: series.locgLink,
-        locgIssueCount: series.locgIssueCount,
+        locgLink: series.locgLink || null,
+        locgIssueCount: series.locgIssueCount || null,
         lastCrawled: series.lastCrawled ? new Date(series.lastCrawled) : null,
-        startDate: series.startDate,
-        endDate: series.endDate,
-        run: series.run
+        startDate: series.startDate || null,
+        endDate: series.endDate || null,
+        run: series.run || null
       },
       include: {
         publisher: true
@@ -138,12 +138,12 @@ export class SeriesService {
       name: created.name,
       publisherId: created.publisherId,
       totalIssues: created.totalIssues,
-      locgLink: created.locgLink,
-      locgIssueCount: created.locgIssueCount,
+      locgLink: created.locgLink || undefined,
+      locgIssueCount: created.locgIssueCount || undefined,
       lastCrawled: created.lastCrawled?.toISOString(),
-      startDate: created.startDate,
-      endDate: created.endDate,
-      run: created.run,
+      startDate: created.startDate || undefined,
+      endDate: created.endDate || undefined,
+      run: created.run || undefined,
       createdAt: created.createdAt.toISOString(),
       publisherName: created.publisher.name
     }
