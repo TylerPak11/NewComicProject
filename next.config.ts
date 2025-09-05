@@ -11,10 +11,7 @@ const nextConfig: NextConfig = {
     trailingSlash: true,
   }),
   // Vercel deployment optimizations
-  experimental: {
-    // Enable serverless functions for API routes
-    serverComponentsExternalPackages: ['@prisma/client', '@sparticuz/chromium', 'puppeteer-core'],
-  },
+  serverExternalPackages: ['@prisma/client', '@sparticuz/chromium', 'puppeteer-core'],
   // Webpack configuration for external dependencies
   webpack: (config, { isServer }) => {
     if (isServer) {

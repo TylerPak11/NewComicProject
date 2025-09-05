@@ -802,7 +802,7 @@ function CLZComicsApp() {
         // Update the series data with the crawl results
         if (result.series) {
           setSelectedSeriesForModal(result.series);
-          setSeriesModalData(prev => ({
+          setSeriesModalData((prev: any) => ({
             ...prev,
             locgIssueCount: result.series.locgIssueCount,
             lastCrawled: result.series.lastCrawled
