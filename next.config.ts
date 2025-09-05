@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     // Ensure public assets are properly handled
     trailingSlash: true,
   }),
-  // Vercel deployment optimizations
+  // Vercel deployment optimizations (updated for deployment)
   serverExternalPackages: ['@prisma/client', '@sparticuz/chromium', 'puppeteer-core'],
   // Webpack configuration for external dependencies
   webpack: (config, { isServer }) => {
