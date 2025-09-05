@@ -159,7 +159,7 @@ export class LOCGCrawlerVercel {
         executablePath: isLocal
           ? undefined // Use local Puppeteer Chrome
           : await chromium.executablePath(),
-        headless: isLocal ? false : chromium.headless, // Visible locally, headless on Vercel
+        headless: isLocal ? false : true, // Visible locally, headless on Vercel
         ignoreHTTPSErrors: true,
       });
 
