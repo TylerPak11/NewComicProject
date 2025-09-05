@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Publisher {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  series Series[]
+  issues Issue[]
+
+  @@map("publishers")
+  @@index([name])
+}
+
+model Series {
+  id              Int       @id @default(autoincrement())
+  name            String
+  publisherId     Int       @map("publisher_id")
+  totalIssues     Int       @default(0) @map("total_issues")
+  locgLink        String?   @map("locg_link")
+  locgIssueCount  Int?      @map("locg_issue_count")
+  lastCrawled     DateTime? @map("last_crawled")
+  startDate       String?   @map("start_date")
+  endDate         String?   @map("end_date")
+  run             String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  publisher Publisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
+  issues    Issue[]
+
+  @@map("series")
+  @@index([publisherId])
+  @@index([name])
+}
+
+model Issue {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  seriesId            Int      @map("series_id")
+  issueNo             Int      @map("issue_no")
+  publisherId         Int      @map("publisher_id")
+  variantDescription  String?  @map("variant_description")
+  coverUrl            String?  @map("cover_url")
+  releaseDate         String?  @map("release_date")
+  upc                 String?
+  locgLink            String?  @map("locg_link")
+  plot                String?
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  // Relations
+  series    Series    @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  publisher Publisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
+
+  @@map("issues")
+  @@index([seriesId])
+  @@index([publisherId])
+}
+
+model WishlistPublisher {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  wishlistSeries WishlistSeries[]
+  wishlistItems  WishlistItem[]
+
+  @@map("wishlist_publishers")
+  @@index([name])
+}
+
+model WishlistSeries {
+  id              Int       @id @default(autoincrement())
+  name            String
+  publisherId     Int       @map("publisher_id")
+  totalIssues     Int       @default(0) @map("total_issues")
+  locgLink        String?   @map("locg_link")
+  locgIssueCount  Int?      @map("locg_issue_count")
+  lastCrawled     DateTime? @map("last_crawled")
+  startDate       String?   @map("start_date")
+  endDate         String?   @map("end_date")
+  run             String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  publisher     WishlistPublisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
+  wishlistItems WishlistItem[]
+
+  @@map("wishlist_series")
+  @@index([publisherId])
+  @@index([name])
+}
+
+model WishlistItem {
+  id                 Int      @id @default(autoincrement())
+  name               String
+  seriesId           Int      @map("series_id")
+  issueNo            Int      @map("issue_no")
+  publisherId        Int      @map("publisher_id")
+  variantDescription String?  @map("variant_description")
+  coverUrl           String?  @map("cover_url")
+  releaseDate        String?  @map("release_date")
+  upc                String?
+  locgLink           String?  @map("locg_link")
+  plot               String?
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  // Relations
+  series    WishlistSeries    @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  publisher WishlistPublisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
+
+  @@map("wishlist")
+  @@index([seriesId])
+  @@index([publisherId])
+}
+
+// Legacy tables for backward compatibility
+model ComicSeries {
+  id          Int      @id @default(autoincrement())
+  title       String
+  publisher   String
+  startYear   Int?     @map("start_year")
+  endYear     Int?     @map("end_year")
+  coverImage  String?  @map("cover_image")
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  comicIssues ComicIssue[]
+
+  @@map("comic_series")
+  @@index([title])
+}
+
+model ComicIssue {
+  id           Int         @id @default(autoincrement())
+  seriesId     Int         @map("series_id")
+  issueNumber  String      @map("issue_number")
+  title        String?
+  releaseDate  String?     @map("release_date")
+  coverDate    String?     @map("cover_date")
+  coverImage   String?     @map("cover_image")
+  description  String?
+  rating       Float?
+  isbn         String?
+  upc          String?
+  price        Float?
+  pageCount    Int?        @map("page_count")
+  writers      String?
+  artists      String?
+  colorists    String?
+  letterers    String?
+  editors      String?
+  variant      Boolean     @default(false)
+  inCollection Boolean     @default(true) @map("in_collection")
+  createdAt    DateTime    @default(now()) @map("created_at")
+
+  // Relations
+  series ComicSeries @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  @@map("comic_issues")
+  @@index([seriesId])
+}
