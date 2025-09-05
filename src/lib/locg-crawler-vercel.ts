@@ -155,7 +155,7 @@ export class LOCGCrawlerVercel {
       
       this.browser = await puppeteer.launch({
         args: isLocal ? [] : chromium.args,
-        defaultViewport: chromium.defaultViewport,
+        defaultViewport: { width: 1280, height: 720 },
         executablePath: isLocal
           ? undefined // Use local Puppeteer Chrome
           : await chromium.executablePath(),
