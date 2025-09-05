@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 import chromium from '@sparticuz/chromium';
-import puppeteer from 'puppeteer-core';
+import puppeteer, { Browser } from 'puppeteer-core';
 
 export interface CrawlResult {
   success: boolean;
@@ -15,7 +15,7 @@ export interface CrawlResult {
 
 export class LOCGCrawlerVercel {
   private static instance: LOCGCrawlerVercel;
-  private browser?: puppeteer.Browser;
+  private browser?: Browser;
 
   private constructor() {}
 
