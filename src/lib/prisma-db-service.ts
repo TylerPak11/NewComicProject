@@ -7,7 +7,7 @@ export class PublisherService {
       orderBy: { name: 'asc' }
     })
     
-    return publishers.map(p => ({
+    return publishers.map((p: any) => ({
       id: p.id,
       name: p.name,
       createdAt: p.createdAt.toISOString()
@@ -75,7 +75,7 @@ export class SeriesService {
       orderBy: { name: 'asc' }
     })
     
-    return series.map(s => ({
+    return series.map((s: any) => ({
       id: s.id,
       name: s.name,
       publisherId: s.publisherId,
@@ -247,7 +247,7 @@ export class SeriesService {
       orderBy: { name: 'asc' }
     })
     
-    return series.map(s => ({
+    return series.map((s: any) => ({
       id: s.id,
       name: s.name,
       publisherId: s.publisherId,
@@ -288,18 +288,18 @@ export class IssueService {
       ]
     })
     
-    return issues.map(i => ({
+    return issues.map((i: any) => ({
       id: i.id,
       name: i.name,
       seriesId: i.seriesId,
       issueNo: i.issueNo,
       publisherId: i.publisherId,
-      variantDescription: i.variantDescription,
-      coverUrl: i.coverUrl,
-      releaseDate: i.releaseDate,
-      upc: i.upc,
+      variantDescription: i.variantDescription || undefined,
+      coverUrl: i.coverUrl || undefined,
+      releaseDate: i.releaseDate || undefined,
+      upc: i.upc || undefined,
       locgLink: i.locgLink,
-      plot: i.plot,
+      plot: i.plot || undefined,
       createdAt: i.createdAt.toISOString(),
       seriesName: i.series.name,
       publisherName: i.publisher.name
@@ -343,18 +343,18 @@ export class IssueService {
       orderBy: { issueNo: 'asc' }
     })
     
-    return issues.map(i => ({
+    return issues.map((i: any) => ({
       id: i.id,
       name: i.name,
       seriesId: i.seriesId,
       issueNo: i.issueNo,
       publisherId: i.publisherId,
-      variantDescription: i.variantDescription,
-      coverUrl: i.coverUrl,
-      releaseDate: i.releaseDate,
-      upc: i.upc,
+      variantDescription: i.variantDescription || undefined,
+      coverUrl: i.coverUrl || undefined,
+      releaseDate: i.releaseDate || undefined,
+      upc: i.upc || undefined,
       locgLink: i.locgLink,
-      plot: i.plot,
+      plot: i.plot || undefined,
       createdAt: i.createdAt.toISOString(),
       seriesName: i.series.name,
       publisherName: i.publisher.name
@@ -462,12 +462,12 @@ export class WishlistService {
       seriesId: i.seriesId,
       issueNo: i.issueNo,
       publisherId: i.publisherId,
-      variantDescription: i.variantDescription,
-      coverUrl: i.coverUrl,
-      releaseDate: i.releaseDate,
-      upc: i.upc,
+      variantDescription: i.variantDescription || undefined,
+      coverUrl: i.coverUrl || undefined,
+      releaseDate: i.releaseDate || undefined,
+      upc: i.upc || undefined,
       locgLink: i.locgLink,
-      plot: i.plot,
+      plot: i.plot || undefined,
       createdAt: i.createdAt.toISOString(),
       seriesName: i.series.name,
       publisherName: i.publisher.name
