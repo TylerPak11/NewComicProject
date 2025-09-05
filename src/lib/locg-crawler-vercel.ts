@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 import chromium from '@sparticuz/chromium';
-import puppeteer, { Browser } from 'puppeteer-core';
+import puppeteer, { Browser, Page } from 'puppeteer-core';
 
 export interface CrawlResult {
   success: boolean;
@@ -147,7 +147,7 @@ export class LOCGCrawlerVercel {
    * Crawl with Puppeteer using Vercel-compatible chrome
    */
   private async crawlWithPuppeteerVercel(url: string, credentials?: { username: string; password: string }): Promise<Omit<CrawlResult, 'crawledAt'>> {
-    let page: puppeteer.Page | undefined;
+    let page: Page | undefined;
     
     try {
       // Use chromium for Vercel
