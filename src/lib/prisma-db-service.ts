@@ -207,12 +207,12 @@ export class SeriesService {
         name: existing.name,
         publisherId: existing.publisherId,
         totalIssues: existing.totalIssues,
-        locgLink: existing.locgLink,
-        locgIssueCount: existing.locgIssueCount,
+        locgLink: existing.locgLink || undefined,
+        locgIssueCount: existing.locgIssueCount || undefined,
         lastCrawled: existing.lastCrawled?.toISOString(),
-        startDate: existing.startDate,
-        endDate: existing.endDate,
-        run: existing.run,
+        startDate: existing.startDate || undefined,
+        endDate: existing.endDate || undefined,
+        run: existing.run || undefined,
         createdAt: existing.createdAt.toISOString(),
         publisherName: existing.publisher.name
       }
