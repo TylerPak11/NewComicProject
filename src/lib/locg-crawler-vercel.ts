@@ -160,13 +160,17 @@ export class LOCGCrawlerVercel {
           ? undefined // Use local Puppeteer Chrome
           : await chromium.executablePath(),
         headless: isLocal ? false : true, // Visible locally, headless on Vercel
-        ignoreHTTPSErrors: true,
       });
 
       page = await this.browser.newPage();
       
       // Set user agent
       await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+      
+      // Set extra HTTP headers to handle HTTPS errors gracefully
+      await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en-US,en;q=0.9'
+      });
       
       // Handle login if credentials are provided
       if (credentials) {
