@@ -107,7 +107,7 @@ export class LOCGCrawlerVercel {
 
       // Extract year range from the page (look for pattern like "2022 - 2023")
       let run: string | undefined;
-      const pageText = $.text();
+      const pageText = $('body').text();
       const yearRangeMatch = pageText.match(/(\d{4}\s*-\s*\d{4})/);
       if (yearRangeMatch) {
         run = yearRangeMatch[1].trim();
