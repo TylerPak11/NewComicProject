@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser, Page } from 'puppeteer';
 
 export interface CrawlResult {
   success: boolean;
@@ -14,7 +14,7 @@ export interface CrawlResult {
 
 export class LOCGCrawler {
   private static instance: LOCGCrawler;
-  private browser?: puppeteer.Browser;
+  private browser?: Browser;
 
   private constructor() {}
 
@@ -116,7 +116,7 @@ export class LOCGCrawler {
 
       // Extract year range from the page (look for pattern like "2022 - 2023")
       let run: string | undefined;
-      const pageText = $.text();
+      const pageText = $('body').text();
       const yearRangeMatch = pageText.match(/(\d{4}\s*-\s*\d{4})/);
       if (yearRangeMatch) {
         run = yearRangeMatch[1].trim();
@@ -156,7 +156,7 @@ export class LOCGCrawler {
    * Crawl with Puppeteer (slower, but handles JS-rendered content)
    */
   private async crawlWithPuppeteer(url: string, credentials?: { username: string; password: string }): Promise<Omit<CrawlResult, 'crawledAt'>> {
-    let page: puppeteer.Page | undefined;
+    let page: Page | undefined;
     
     try {
       // Always create a fresh browser for each crawl to avoid connection issues
